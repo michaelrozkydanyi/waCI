@@ -5,7 +5,7 @@ admin:
   labels:
     io.rancher.container.pull_image: always
   tty: true
-  image: docker.lab.int:5000/academy:1
+  image: registry.local.lab:5000/academy:1
   stdin_open: true
   environment:
     SERVICE_80_NAME: admin
