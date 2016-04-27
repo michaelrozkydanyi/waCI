@@ -1,25 +1,28 @@
-FROM ubuntu:14.04
-MAINTAINER jerome.petazzoni@docker.com
+# Script version: 0.0.1
+# OS and version
+FROM nginx
+# Owner
+MAINTAINER sg <matiushenkos@edi.su>
+# Enviroments
+ENV VERSION 0.0.1
+ENV DEBIAN_FRONTEND noninteractive
+# Configure local time
+RUN \
+    echo 'Europe/Kiev' > /etc/timezone && \
+    dpkg-reconfigure tzdata && \
+# Upgrade OS
+    apt-get update && \
+    apt-get upgrade -y && \
+# Install apache, apache-modules
+    apt-get install -y vim && \
+    apt-get install -y git && \
+# clean repositories
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN rm /usr/share/nginx/html/index.html
+ADD wa.html /usr/share/nginx/html/index.html
+# Open ports in docker (if you don't use start options -p 8880:8880 port will open randomly on base host)
+EXPOSE 80/tcp
+# Run apache (docker don't autostart services)
+CMD ["nginx","-g","daemon off;"]
+##ENTRYPOINT ["/bin/bash"]
 
-# Let's start with some basic stuff.
-RUN apt-get update -qq && apt-get install -qqy \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    git \
-    lxc \
-    iptables
-    
-# Install Docker from Docker Inc. repositories.
-ADD devdockerCA.crt /usr/local/share/ca-certificates/docker-dev-cert/devdockerCA.crt
-RUN update-ca-certificates --fresh
-ADD config.json /root/.docker/config.json
-RUN curl -sSL https://get.docker.com/ | sh
-
-# Install the magic wrapper.
-ADD ./wrapdocker /usr/local/bin/wrapdocker
-RUN chmod +x /usr/local/bin/wrapdocker
-
-# Define additional metadata for our image.
-VOLUME /var/lib/docker
-CMD ["wrapdocker"]
