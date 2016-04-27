@@ -6,10 +6,14 @@ RUN apt-get update -qq && apt-get install -qqy \
     apt-transport-https \
     ca-certificates \
     curl \
+    git \
     lxc \
     iptables
     
 # Install Docker from Docker Inc. repositories.
+ADD devdockerCA.crt /usr/local/share/ca-certificates/docker-dev-cert/devdockerCA.crt
+RUN update-ca-certificates --fresh
+ADD config.json /root/.docker/config.json
 RUN curl -sSL https://get.docker.com/ | sh
 
 # Install the magic wrapper.
