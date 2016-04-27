@@ -2,7 +2,7 @@
 # OS and version
 FROM nginx
 # Owner
-MAINTAINER sg <matiushenkos@edi.su>
+MAINTAINER sg <someone@gmail.com>
 # Enviroments
 ENV VERSION 0.0.1
 ENV DEBIAN_FRONTEND noninteractive
