@@ -1,0 +1,36 @@
+#
+image: docker.lab.int:5000/droneworkdocker
+#image:
+#  registry_host: docker.lab.int:5000
+#  registry_protocol: http
+#  registry_login: false
+#  registry_login_uri: /registry/v1/
+#  username: log
+#  password: pass
+#  email: docker@lab.int
+#  image_name: droneworkdocker
+#
+branches:
+  - deploy
+#  - master
+script:
+  - ./.drone/get_code.sh
+  - ./.drone/build.sh
+  - ./.drone/deploy.sh
+  - ./.drone/stop_docker.sh
+#  - ./.drone/rm_vfs.sh
+deploy:
+  bash:
+    script:
+# Here we use ssh key pairs to run deploy.sh on the production server. 
+# The arbitrarily named private key should be saved to .drone/private_deploy_key. 
+# The public key should be concatenated to ~/.ssh/authorized_keys on the remote—in the home directory of the user Drone will log in as.
+# Generate a key pair using ssh_keygen and push it to a remote using ssh-copy-id. https://help.ubuntu.com/community/SSH/OpenSSH/Keys
+      - chmod 600 .drone/private_deploy_key
+# Here we're logging on to the remote server via SSH using the freshly restricted private key via the -i option.
+# Then we're sending deploy.sh through the remote bash.
+#      - ssh -i .drone/private_deploy_key drone@prod-server 'bash -s' < ./.drone/deploy.sh
+notify:  
+  email:
+    recipients:
+      - user@lab.int
