@@ -8,7 +8,9 @@ set -e
 wrapdocker &  
 sleep 5
 
-sed -i '2 i192.168.33.22 registry.local.lab registry' /etc/hosts
+cp /etc/hosts ~/hosts.new
+sed -i '2 i192.168.33.22 registry.local.lab registry' ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
 
 docker build -t registry.local.lab:5000/academy:1 .
 #docker commit edipro-deb79 registry.edi.su/edipro-deb79
