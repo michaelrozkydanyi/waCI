@@ -14,4 +14,5 @@ cp -f ~/hosts.new /etc/hosts
 
 docker build -t registry.local.lab:5000/academy:1 .
 #docker commit edipro-deb79 registry.edi.su/edipro-deb79
+docker login -u user -p user registry.local.lab
 docker push registry.local.lab:5000/academy:1
