@@ -8,7 +8,7 @@ set -e
 wrapdocker &  
 sleep 5
 
-docker build -t docker.lab.int:5000/academy:1 .
+docker build -t registry.local.lab:5000/academy:1 .
 #docker commit edipro-deb79 registry.edi.su/edipro-deb79
-docker push docker.lab.int:5000/academy:1
+docker push registry.local.lab:5000/academy:1
 
