@@ -1,5 +1,5 @@
 #
-image: dronework
+image: registry.local.lab/droneworker
 #image:
 #  registry_host: docker.lab.int:5000
 #  registry_protocol: http
@@ -33,4 +33,4 @@ deploy:
 notify:  
   email:
     recipients:
-      - user@lab.int
+      - mike@local.lab
