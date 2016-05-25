@@ -1,5 +1,5 @@
 #
-image: registry.local.lab:5000/droneworker
+image: registry.local.lab/droneworker
 #image:
 #  registry_host: docker.lab.int:5000
 #  registry_protocol: http
